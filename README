@@ -1,0 +1,4 @@
+ActiveModel
+===========
+
+Provides validation and callbacks outside of the ActiveRecord::Base hierarchy.
