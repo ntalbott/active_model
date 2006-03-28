@@ -2,6 +2,8 @@ class ActiveModel
   
   cattr_accessor :logger
   
+  include Reloadable::Subclasses
+  
   class << self
 
     def attribute_names
@@ -23,27 +25,6 @@ class ActiveModel
   
     def human_attribute_name(attribute_key_name)
       attribute_key_name.humanize
-    end
-
-    def inherited(child)
-      @@subclasses[self] ||= []
-      @@subclasses[self] << child
-      super
-    end
-
-    def reset_subclasses
-      subclasses.each do |klass|
-        klass.instance_variables.each { |var| klass.send(:remove_instance_variable, var) }
-        klass.instance_methods(false).each { |m| klass.send :undef_method, m }
-      end
-      @@subclasses = {}
-    end
-
-    @@subclasses = {}
-
-    def subclasses
-      @@subclasses[self] ||= []
-      @@subclasses[self] + extra = @@subclasses[self].inject([]) {|list, subclass| list + subclass.subclasses }
     end
 
   end
@@ -76,6 +57,7 @@ class ActiveModel
   def save
     create_or_update
   end
+  alias save! save
   
   def create_or_update; end
   
