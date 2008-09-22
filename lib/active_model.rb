@@ -39,6 +39,13 @@ class ActiveModel
     self.class.attribute_names
   end
   
+  def attributes
+    self.attribute_names.inject({}) do |attrs, name|
+      attrs[name] = send(name)
+      attrs
+    end
+  end
+  
   def attributes=(attributes)
     return unless attributes
     attributes.stringify_keys!

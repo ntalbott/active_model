@@ -11,4 +11,9 @@ class ActiveModelTest < Test::Unit::TestCase
     assert !user.valid?
     assert_equal "can't be blank", user.errors.on(:name)
   end
+  
+  def test_attributes
+    user = User.new(:name => "John Doe")
+    assert_equal({"name" => "John Doe"}, user.attributes)
+  end
 end
