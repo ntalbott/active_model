@@ -26,6 +26,10 @@ class ActiveModel
     def human_attribute_name(attribute_key_name)
       attribute_key_name.humanize
     end
+    
+    def base_class
+      self
+    end
 
   end
   
