@@ -2,8 +2,6 @@ class ActiveModel
   
   cattr_accessor :logger
   
-  include Reloadable::Subclasses
-  
   class << self
 
     def attribute_names
