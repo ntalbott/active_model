@@ -25,8 +25,24 @@ class ActiveModel
       attribute_key_name.humanize
     end
     
+    def human_name
+      defaults = self_and_descendants_from_active_record.map do |klass|
+        :"#{klass.name.underscore}"
+      end 
+      defaults << self.name.humanize
+    end
+    
     def base_class
       self
+    end
+    
+    def self_and_descendants_from_active_record
+      klass = self
+      classes = [klass]
+      while klass != klass.base_class  
+        classes << klass = klass.superclass
+      end
+      classes
     end
 
   end
